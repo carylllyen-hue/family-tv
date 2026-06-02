@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FamilyTV — 专为长辈设计的电视亲情通话</title>
+<meta name="description" content="FamilyTV 是一款专为长辈与子女设计的电视大屏亲情通话工具，主打大字体、高对比度、极简操作。">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F5F7;
+    --surface: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --accent: #0071E3;
+    --accent-light: #E8F2FE;
+    --radius: 20px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+                 "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0,113,227,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 80px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #1D1D1F 0%, #6E6E73 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero .slogan {
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--text-secondary);
+    font-weight: 400;
+    max-width: 520px;
+    margin: 0 auto 48px;
+    letter-spacing: -0.3px;
+  }
+
+  /* ===== Features ===== */
+  .features {
+    padding: 80px 24px 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: -1px;
+    margin-bottom: 56px;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .feature-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
+
+  .feature-icon.i1 { background: linear-gradient(135deg, #FFE8D6, #FFDCC8); }
+  .feature-icon.i2 { background: linear-gradient(135deg, #D6E4FF, #C8DAFF); }
+  .feature-icon.i3 { background: linear-gradient(135deg, #D6FFE8, #C8FFDA); }
+
+  .feature-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .feature-card p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ===== Mockup ===== */
+  .showcase {
+    padding: 40px 24px 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .mockup-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    justify-items: center;
+  }
+
+  .mockup {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 16/10;
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mockup.m1 {
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+
+  .mockup.m2 {
+    background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+  }
+
+  /* TV UI mockup inner elements */
+  .mockup .tv-screen {
+    position: absolute;
+    top: 8%;
+    left: 6%;
+    right: 6%;
+    bottom: 8%;
+    background: #0D1117;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .mockup .tv-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0071E3, #5856D6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: white;
+    box-shadow: 0 0 20px rgba(0,113,227,0.4);
+  }
+
+  .mockup .tv-name {
+    color: #F5F5F7;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+
+  .mockup .tv-status {
+    color: #6E6E73;
+    font-size: 13px;
+  }
+
+  .mockup .tv-btn-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .mockup .tv-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .tv-btn.decline { background: #FF3B30; }
+  .tv-btn.accept  { background: #34C759; }
+
+  /* Phone UI mockup inner elements */
+  .mockup .phone-screen {
+    position: absolute;
+    top: 8%;
+    left: 6%;
+    right: 6%;
+    bottom: 8%;
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .mockup .phone-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #FF9500, #FF3B30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: white;
+  }
+
+  .mockup .phone-name {
+    color: #1D1D1F;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .mockup .phone-label {
+    color: #6E6E73;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .mockup .phone-call-bar {
+    display: flex;
+    gap: 24px;
+  }
+
+  .phone-call-bar .pb {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+  }
+
+  .pb.hangup { background: #FF3B30; }
+  .pb.speaker { background: #E5E5EA; color: #1D1D1F; }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding: 48px 24px;
+    text-align: center;
+  }
+
+  footer .footer-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  footer .copyright {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  footer .contact {
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    margin-bottom: 28px;
+    display: inline-block;
+  }
+
+  footer .contact:hover { text-decoration: underline; }
+
+  .download-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: #E5E5EA;
+    color: #8E8E93;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 14px;
+    border: none;
+    cursor: not-allowed;
+    letter-spacing: -0.2px;
+  }
+
+  footer .note {
+    font-size: 12px;
+    color: #AEAEB2;
+    margin-top: 16px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    .hero { padding: 80px 20px 40px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .mockup-container { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <span class="hero-badge">为长辈设计</span>
+  <h1>FamilyTV</h1>
+  <p class="slogan">让每一次家庭通话，都像坐在客厅沙发上一样自然。</p>
+</section>
+
+<!-- Features -->
+<section class="features">
+  <p class="section-label">核心功能</p>
+  <h2 class="section-title">为长辈而生</h2>
+  <div class="feature-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon i1">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8710A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <h3>大字高对比界面</h3>
+      <p>专为长辈视觉习惯设计，大字体、高对比度配色，界面简洁无干扰，降低认知负担。</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon i2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0071E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <h3>一键快速通话</h3>
+      <p>预设家人联系方式，电视端一键发起视频呼叫，无需复杂操作，让科技回归温情。</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon i3">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#30D158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.08"/></svg>
+      </div>
+      <h3>智能音频辅助</h3>
+      <p>内置音频增强算法，自动补偿语音清晰度，让长辈轻松听清每一句家常话。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Mockup Showcase -->
+<section class="showcase">
+  <p class="section-label">产品预览</p>
+  <h2 class="section-title">精致界面体验</h2>
+  <div class="mockup-container">
+
+    <!-- TV Mockup -->
+    <div class="mockup m1">
+      <div class="tv-screen">
+        <div class="tv-avatar">👴</div>
+        <div class="tv-name">爸爸</div>
+        <div class="tv-status">视频通话中 · 00:32</div>
+        <div class="tv-btn-row">
+          <div class="tv-btn decline">📞</div>
+          <div class="tv-btn accept">📞</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Mockup -->
+    <div class="mockup m2">
+      <div class="phone-screen">
+        <div class="phone-avatar">📺</div>
+        <div class="phone-name">客厅电视</div>
+        <div class="phone-label">FamilyTV 来电...</div>
+        <div class="phone-call-bar">
+          <div class="pb speaker">🔊</div>
+          <div class="pb hangup">📞</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <p class="copyright">Copyright © 2026 FamilyTV. All rights reserved.</p>
+    <a class="contact" href="mailto:hello@familytv.app">hello@familytv.app</a>
+    <div>
+      <button class="download-btn" disabled>Android 稳定版下载（即将上线）</button>
+    </div>
+    <p class="note">本产品为独立开发者个人项目，专注家庭亲情通话场景。</p>
+  </div>
+</footer>
+
+</body>
+</html>
