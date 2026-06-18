@@ -3,8 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>亲情通大屏交互 — 专为长辈设计的电视亲情通话系统官方网站</title>
-<meta name="description" content="亲情通大屏交互是一款专为长辈与子女设计的电视大屏亲情通话工具，主打大字体、高对比度、极简操作。">
+<title>亲情通电视 — 专为长辈设计的电视亲情通话系统</title>
+<meta name="description" content="亲情通电视（FamilyTV）是一款专为长辈与子女设计的电视大屏亲情通话工具，主打大字体、高对比度、极简操作，一键视频通话。">
+<meta property="og:title" content="亲情通电视 — 专为长辈设计的电视亲情通话系统">
+<meta property="og:description" content="让每一次大屏家庭通话，都像坐在客厅沙发上一样自然。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://carylllyen-hue.github.io/family-tv/">
+<meta name="theme-color" content="#0071E3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,11 +20,16 @@
     --text-primary: #1D1D1F;
     --text-secondary: #6E6E73;
     --accent: #0071E3;
+    --accent-hover: #0077ED;
     --accent-light: #E8F2FE;
     --radius: 20px;
+    --radius-sm: 12px;
     --shadow: 0 4px 24px rgba(0,0,0,0.06);
     --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
+    --nav-height: 56px;
   }
+
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
@@ -29,6 +40,56 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ===== Navigation ===== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+  }
+
+  nav .nav-inner {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  nav .logo {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    background: linear-gradient(135deg, #1D1D1F 0%, #6E6E73 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  nav .logo span { font-weight: 400; color: var(--text-secondary); -webkit-text-fill-color: var(--text-secondary); }
+
+  nav .nav-links { display: flex; gap: 28px; list-style: none; }
+
+  nav .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+  }
+
+  nav .nav-links a:hover { color: var(--accent); }
+
   /* ===== Hero ===== */
   .hero {
     min-height: 100vh;
@@ -37,7 +98,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 60px 24px 40px;
+    padding: calc(var(--nav-height) + 40px) 24px 40px;
     position: relative;
     overflow: hidden;
   }
@@ -55,7 +116,9 @@
   }
 
   .hero-badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 6px 16px;
     background: var(--accent-light);
     color: var(--accent);
@@ -71,11 +134,19 @@
     font-weight: 700;
     letter-spacing: -2px;
     line-height: 1.15;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     background: linear-gradient(135deg, #1D1D1F 0%, #6E6E73 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--text-secondary);
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    margin-bottom: 8px;
   }
 
   .hero .slogan {
@@ -83,13 +154,60 @@
     color: var(--text-secondary);
     font-weight: 400;
     max-width: 520px;
-    margin: 0 auto 48px;
+    margin: 0 auto 40px;
     letter-spacing: -0.3px;
   }
 
-  /* ===== Features ===== */
-  .features {
-    padding: 80px 24px 100px;
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover { background: var(--accent-hover); }
+
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+  }
+
+  .btn-secondary:hover { box-shadow: 0 0 0 1px rgba(0,0,0,0.2), var(--shadow); }
+
+  .btn-disabled {
+    background: #E5E5EA;
+    color: #8E8E93;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ===== Sections ===== */
+  section { padding: 80px 24px 100px; }
+
+  section .section-inner {
     max-width: 1100px;
     margin: 0 auto;
   }
@@ -112,6 +230,7 @@
     margin-bottom: 56px;
   }
 
+  /* ===== Features ===== */
   .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -159,13 +278,67 @@
     line-height: 1.6;
   }
 
-  /* ===== Mockup ===== */
-  .showcase {
-    padding: 40px 24px 100px;
-    max-width: 1100px;
-    margin: 0 auto;
+  /* ===== Architecture ===== */
+  .arch-section { background: var(--surface); }
+
+  .arch-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 20px 0;
   }
 
+  .arch-node {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    text-align: center;
+    min-width: 140px;
+    transition: transform 0.2s;
+  }
+
+  .arch-node:hover { transform: translateY(-2px); }
+
+  .arch-node .icon { font-size: 28px; margin-bottom: 8px; }
+  .arch-node .name { font-size: 14px; font-weight: 600; }
+  .arch-node .desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+  .arch-arrow {
+    font-size: 20px;
+    color: var(--text-secondary);
+  }
+
+  .arch-labels {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .arch-labels .label-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .arch-labels .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot.dot-tv { background: #5856D6; }
+  .dot.dot-server { background: #FF9500; }
+  .dot.dot-phone { background: #34C759; }
+
+  /* ===== Mockup ===== */
   .mockup-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -191,7 +364,6 @@
     background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
   }
 
-  /* TV UI mockup inner elements */
   .mockup .tv-screen {
     position: absolute;
     top: 8%;
@@ -247,12 +419,13 @@
     align-items: center;
     justify-content: center;
     font-size: 18px;
+    border: none;
+    cursor: pointer;
   }
 
   .tv-btn.decline { background: #FF3B30; }
   .tv-btn.accept  { background: #34C759; }
 
-  /* Phone UI mockup inner elements */
   .mockup .phone-screen {
     position: absolute;
     top: 8%;
@@ -299,7 +472,7 @@
     gap: 24px;
   }
 
-  .phone-call-bar .pb {
+  .mockup .phone-call-bar .pb {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -308,10 +481,40 @@
     justify-content: center;
     font-size: 20px;
     color: white;
+    border: none;
+    cursor: pointer;
   }
 
   .pb.hangup { background: #FF3B30; }
   .pb.speaker { background: #E5E5EA; color: #1D1D1F; }
+
+  /* ===== Tech Specs ===== */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .tech-card {
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+
+  .tech-card .num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+
+  .tech-card .label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
 
   /* ===== Footer ===== */
   footer {
@@ -326,131 +529,275 @@
     margin: 0 auto;
   }
 
-  footer .copyright {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 12px;
+  footer .footer-brand {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin-bottom: 8px;
   }
 
-  footer .contact {
+  footer .footer-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  footer .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  footer .footer-links a {
     font-size: 14px;
     color: var(--accent);
     text-decoration: none;
-    margin-bottom: 28px;
-    display: inline-block;
   }
 
-  footer .contact:hover { text-decoration: underline; }
+  footer .footer-links a:hover { text-decoration: underline; }
 
-  .download-btn {
-    display: inline-block;
-    padding: 14px 36px;
-    background: #E5E5EA;
-    color: #8E8E93;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 14px;
-    border: none;
-    cursor: not-allowed;
-    letter-spacing: -0.2px;
-  }
-
-  footer .note {
-    font-size: 12px;
+  footer .copyright {
+    font-size: 13px;
     color: #AEAEB2;
-    margin-top: 16px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0,0,0,0.06);
   }
 
   /* ===== Responsive ===== */
   @media (max-width: 640px) {
-    .hero { padding: 80px 20px 40px; }
+    .hero { padding: calc(var(--nav-height) + 24px) 20px 40px; }
+    section { padding: 60px 20px 80px; }
     .feature-grid { grid-template-columns: 1fr; }
     .mockup-container { grid-template-columns: 1fr; }
+    .arch-diagram { flex-direction: column; gap: 4px; }
+    .arch-arrow { transform: rotate(90deg); }
+    nav .nav-links { gap: 16px; }
+    nav .nav-links a { font-size: 12px; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ===== Fade-in Animation ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>
 </head>
 <body>
 
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">亲情通电视 <span>| FamilyTV</span></div>
+    <ul class="nav-links">
+      <li><a href="#features">核心功能</a></li>
+      <li><a href="#architecture">系统架构</a></li>
+      <li><a href="#showcase">产品预览</a></li>
+      <li><a href="#download">下载</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
 <section class="hero">
-  <span class="hero-badge">为长辈设计</span>
-  <h1>亲情通大屏交互</h1>
+  <span class="hero-badge">📺 为长辈设计</span>
+  <h1>亲情通电视</h1>
+  <p class="subtitle">FamilyTV — 专为老人设计的一键视频通话电视终端</p>
   <p class="slogan">让每一次大屏家庭通话，都像坐在客厅沙发上一样自然。</p>
-</section>
-
-<section class="features">
-  <p class="section-label">核心功能</p>
-  <h2 class="section-title">为长辈而生</h2>
-  <div class="feature-grid">
-
-    <div class="feature-card">
-      <div class="feature-icon i1">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8710A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-      </div>
-      <h3>大字高对比界面</h3>
-      <p>专为长辈视觉习惯设计，大字体、高对比度配色，界面简洁无干扰，全面适配智能大屏终端，降低操作门槛。</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon i2">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0071E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </div>
-      <h3>电视端一键快速通话</h3>
-      <p>电视大屏端预设家人联系方式，一键即可与子女手机端发起音视频通话大屏交互，无需任何复杂设置。</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon i3">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#30D158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.08"/></svg>
-      </div>
-      <h3>智能音频辅助增强</h3>
-      <p>系统内置专为老年人听力优化的音频增强机制，自动增强语音清晰度，确保大屏交互通话时听清每一句话。</p>
-    </div>
-
+  <div class="hero-actions">
+    <a href="#download" class="btn btn-primary">获取应用</a>
+    <a href="#features" class="btn btn-secondary">了解更多 ↓</a>
   </div>
 </section>
 
-<section class="showcase">
-  <p class="section-label">产品预览</p>
-  <h2 class="section-title">亲情通大屏交互系统展示</h2>
-  <div class="mockup-container">
+<!-- Features -->
+<section id="features" class="features">
+  <div class="section-inner">
+    <p class="section-label">核心功能</p>
+    <h2 class="section-title">为长辈而生</h2>
+    <div class="feature-grid">
 
-    <div class="mockup m1">
-      <div class="tv-screen">
-        <div class="tv-avatar">👴</div>
-        <div class="tv-name">智能电视大屏端</div>
-        <div class="tv-status">大屏音视频交互中 · 00:32</div>
-        <div class="tv-btn-row">
-          <div class="tv-btn decline">📞</div>
-          <div class="tv-btn accept">📞</div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon i1">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8710A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         </div>
+        <h3>大字高对比界面</h3>
+        <p>专为长辈视觉习惯设计，大字体、高对比度配色，界面简洁无干扰，全面适配智能大屏终端，降低操作门槛。</p>
       </div>
-    </div>
 
-    <div class="mockup m2">
-      <div class="phone-screen">
-        <div class="phone-avatar">📺</div>
-        <div class="phone-name">亲情通手机端</div>
-        <div class="phone-label">收到电视端大屏呼叫...</div>
-        <div class="phone-call-bar">
-          <div class="pb speaker">🔊</div>
-          <div class="pb hangup">📞</div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon i2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0071E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
+        <h3>电视端一键快速通话</h3>
+        <p>电视大屏端预设家人联系方式，一键即可与子女手机端发起音视频通话，无需任何复杂设置。</p>
       </div>
-    </div>
 
+      <div class="feature-card fade-in">
+        <div class="feature-icon i3">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#30D158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.08"/></svg>
+        </div>
+        <h3>智能音频辅助增强</h3>
+        <p>系统内置专为老年人听力优化的音频增强机制，自动增强语音清晰度，确保通话时听清每一句话。</p>
+      </div>
+
+    </div>
   </div>
 </section>
 
+<!-- Architecture -->
+<section id="architecture" class="arch-section">
+  <div class="section-inner">
+    <p class="section-label">系统架构</p>
+    <h2 class="section-title">如何工作</h2>
+
+    <div class="arch-diagram fade-in">
+      <div class="arch-node">
+        <div class="icon">📺</div>
+        <div class="name">电视端</div>
+        <div class="desc">Android / WMPF / 小程序</div>
+      </div>
+      <div class="arch-arrow">⟷</div>
+      <div class="arch-node">
+        <div class="icon">🖥️</div>
+        <div class="name">信令服务器</div>
+        <div class="desc">WebSocket / 签名服务</div>
+      </div>
+      <div class="arch-arrow">⟷</div>
+      <div class="arch-node">
+        <div class="icon">📱</div>
+        <div class="name">手机端</div>
+        <div class="desc">微信小程序 / VoIP</div>
+      </div>
+    </div>
+
+    <div class="arch-labels">
+      <span class="label-item"><span class="dot dot-tv"></span>电视端一键发起</span>
+      <span class="label-item"><span class="dot dot-server"></span>信令服务器中转</span>
+      <span class="label-item"><span class="dot dot-phone"></span>手机端实时接听</span>
+    </div>
+
+    <div class="tech-grid" style="margin-top: 40px;">
+      <div class="tech-card fade-in">
+        <div class="num">WMPF</div>
+        <div class="label">微信硬件平台接入</div>
+      </div>
+      <div class="tech-card fade-in">
+        <div class="num">VoIP</div>
+        <div class="label">微信实时音视频通话</div>
+      </div>
+      <div class="tech-card fade-in">
+        <div class="num">Android</div>
+        <div class="label">原生Flutter+原生应用</div>
+      </div>
+      <div class="tech-card fade-in">
+        <div class="num">WebSocket</div>
+        <div class="label">实时信令连接</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase -->
+<section id="showcase" class="showcase">
+  <div class="section-inner">
+    <p class="section-label">产品预览</p>
+    <h2 class="section-title">亲情通电视系统展示</h2>
+    <div class="mockup-container">
+
+      <div class="mockup m1 fade-in">
+        <div class="tv-screen">
+          <div class="tv-avatar">👴</div>
+          <div class="tv-name">智能电视大屏端</div>
+          <div class="tv-status">大屏音视频交互中 · 00:32</div>
+          <div class="tv-btn-row">
+            <div class="tv-btn decline">✕</div>
+            <div class="tv-btn accept">✓</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mockup m2 fade-in">
+        <div class="phone-screen">
+          <div class="phone-avatar">📺</div>
+          <div class="phone-name">亲情通手机端</div>
+          <div class="phone-label">收到电视端大屏呼叫...</div>
+          <div class="phone-call-bar">
+            <div class="pb speaker">🔊</div>
+            <div class="pb hangup">📞</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Download -->
+<section id="download" class="features" style="padding-bottom: 60px;">
+  <div class="section-inner">
+    <p class="section-label">获取应用</p>
+    <h2 class="section-title">下载与部署</h2>
+
+    <div class="feature-grid" style="max-width: 700px; margin: 0 auto;">
+      <div class="feature-card fade-in" style="text-align: center;">
+        <div class="feature-icon" style="margin: 0 auto 16px; background: linear-gradient(135deg, #D6E4FF, #C8DAFF);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0071E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <h3>Android 安装包</h3>
+        <p style="margin-bottom: 20px;">亲情通电视 Android 系统安装包即将上线。您也可以前往 GitHub 项目主页获取源码自行构建。</p>
+        <a href="https://github.com/carylllyen-hue/family-tv" target="_blank" class="btn btn-secondary" style="font-size: 14px; padding: 10px 24px;">查看源码 →</a>
+      </div>
+
+      <div class="feature-card fade-in" style="text-align: center;">
+        <div class="feature-icon" style="margin: 0 auto 16px; background: linear-gradient(135deg, #D6FFE8, #C8FFDA);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#30D158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <h3>微信小程序</h3>
+        <p style="margin-bottom: 20px;">手机端通过微信小程序搜索「亲情通电视」或扫描二维码即可使用。</p>
+        <span class="btn btn-disabled" style="font-size: 14px; padding: 10px 24px;">即将上线</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
 <footer>
   <div class="footer-inner">
-    <p class="copyright">Copyright © 2026 亲情通大屏交互系统. All rights reserved.</p>
-    <a class="contact" href="mailto:hello@familytv.app">项目服务支持：hello@familytv.app</a>
-    <div>
-      <button class="download-btn" disabled>亲情通大屏交互 Android 系统安装包（即将上线）</button>
+    <div class="footer-brand">亲情通电视</div>
+    <div class="footer-desc">FamilyTV — 专为老人设计的一键视频通话电视终端</div>
+    <div class="footer-links">
+      <a href="https://github.com/carylllyen-hue/family-tv" target="_blank">GitHub 项目</a>
+      <a href="mailto:hello@familytv.app">hello@familytv.app</a>
     </div>
-    <p class="note">本产品为团队自主独立研发之“亲情通大屏交互”系统官方网站，专注家庭音视频大屏关怀交互场景。</p>
+    <div class="copyright">
+      Copyright © 2026 亲情通电视系统. All rights reserved.
+    </div>
   </div>
 </footer>
+
+<script>
+// Intersection Observer for fade-in animations
+document.addEventListener('DOMContentLoaded', function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+});
+</script>
 
 </body>
 </html>
